@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateEventRequest;
 use App\Models\Country;
 use App\Models\Tag;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,7 @@ class EventController extends Controller
         return view('events.create', compact('countries', 'tags'));
     }
 
-    public function store(CreateEventRequest $request)
+    public function store(CreateEventRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -43,7 +44,7 @@ class EventController extends Controller
             return to_route('events.create')->with('error', $th->getMessage());
         }
 
-        return to_route('events.index');
+        return to_route('events.index')->with('message', __('Event created successfully'));
     }
 
     public function show(string $id)

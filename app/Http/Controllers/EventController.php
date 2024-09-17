@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateEventRequest;
 use App\Models\Country;
+use App\Models\Event;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class EventController extends Controller
 
     public function index(): View
     {
-        return view('events.index');
+        $events = Event::with('country')->get();
+        return view('events.index', compact('events'));
     }
 
     public function create(): View

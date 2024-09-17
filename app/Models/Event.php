@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 
 class Event extends Model
 {
@@ -26,6 +27,16 @@ class Event extends Model
         'country_id',
         'city_id',
     ];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime'
+    ];
+
+    public function getStartTimeAttribute($value): string
+    {
+        return Carbon::parse($value)->format('h:i A');
+    }
 
     public function user(): BelongsTo
     {

@@ -45,7 +45,7 @@
                                     {{ $event->start_date->format('d-m-Y') }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $event->start_time }}
+                                    {{ $event->start_time->format('h:i A') }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $event->country->name }}

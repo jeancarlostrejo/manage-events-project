@@ -18,6 +18,7 @@ class EventController extends Controller
     public function index(): View
     {
         $events = Event::with('country')->get();
+
         return view('events.index', compact('events'));
     }
 
@@ -25,6 +26,7 @@ class EventController extends Controller
     {
         $countries = Country::get(['id', 'name']);
         $tags = Tag::get(['id', 'name']);
+
         return view('events.create', compact('countries', 'tags'));
     }
 
@@ -54,9 +56,13 @@ class EventController extends Controller
         //
     }
 
-    public function edit(string $id)
-    {
-        //
+    public function edit(Event $event): View
+    {   
+        $event->load('tags');
+        $countries = Country::get(['id', 'name']);
+        $tags = Tag::get(['id', 'name']);
+        
+        return view('events.edit', compact('countries', 'tags', 'event'));
     }
 
     public function update(Request $request, string $id)

@@ -30,13 +30,9 @@ class Event extends Model
 
     protected $casts = [
         'start_date' => 'datetime',
-        'end_date' => 'datetime'
+        'end_date' => 'datetime',
+        'start_time' => 'datetime'
     ];
-
-    public function getStartTimeAttribute($value): string
-    {
-        return Carbon::parse($value)->format('h:i A');
-    }
 
     public function user(): BelongsTo
     {

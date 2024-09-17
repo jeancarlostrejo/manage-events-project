@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CountryCityController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/events', EventController::class);
     Route::resource('/galleries', GalleryController::class);
+    Route::get('/countries/{country}', CountryCityController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -34,7 +34,8 @@ class CreateEventRequest extends FormRequest
             'num_tickets' => 'required|integer|min:1',
             'country_id' => 'required|exists:countries,id',
             'city_id' => 'required|exists:cities,id',
-            'tags' => 'required|exists:tags,id'
+            'tags' => 'required|array',
+            'tags.*' => 'required|exists:tags,id'
         ];
     }
 

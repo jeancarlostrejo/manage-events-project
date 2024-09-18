@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\Tag;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -69,6 +68,7 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         $data = $request->validated();
+
         DB::beginTransaction();
 
         try {
@@ -93,8 +93,26 @@ class EventController extends Controller
         return to_route('events.index')->with('message', 'Event update successfully');
     }
 
-    public function destroy(string $id)
+    public function destroy(Event $event)
     {
-        //
+
+        Storage::disk('public')->delete($event->image);
+        
+        DB::beginTransaction();
+        
+        try {
+            $event->tags()->detach($event->tags);
+            $event->delete();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return to_route('events.index')->with('error', $th->getMessage());
+        }
+
+        return to_route('events.index')->with('message', __('Event deleted successfully'));
+
+
     }
 }

@@ -65,7 +65,7 @@ class EventController extends Controller
         return view('events.edit', compact('countries', 'tags', 'event'));
     }
 
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
         $data = $request->validated();
 
@@ -93,7 +93,7 @@ class EventController extends Controller
         return to_route('events.index')->with('message', 'Event update successfully');
     }
 
-    public function destroy(Event $event)
+    public function destroy(Event $event): RedirectResponse
     {
 
         Storage::disk('public')->delete($event->image);
@@ -112,7 +112,5 @@ class EventController extends Controller
         }
 
         return to_route('events.index')->with('message', __('Event deleted successfully'));
-
-
     }
 }

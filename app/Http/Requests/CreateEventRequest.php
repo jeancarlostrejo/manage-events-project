@@ -45,7 +45,8 @@ class CreateEventRequest extends FormRequest
             'slug' => 'title',
             'city_id' => __('City'),
             'num_tickets' => __('Number of tickets'),
-            'country_id' => __('Country')
+            'country_id' => __('Country'),
+            'tags.*' => __('Tags')
         ];
     }
 

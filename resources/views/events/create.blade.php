@@ -164,6 +164,12 @@
                         @endforeach
 
                     </ul>
+                    @error('tags')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                    @enderror
+                    @error('tags.*')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mt-2">
                     <button type="submit"

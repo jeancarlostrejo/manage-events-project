@@ -90,7 +90,7 @@ class EventController extends Controller
             return to_route('events.index')->with('error', $th->getMessage());
         }
 
-        return to_route('events.index')->with('message', 'Event update successfully');
+        return to_route('events.index')->with('message', __('Event updated successfully') );
     }
 
     public function destroy(Event $event): RedirectResponse

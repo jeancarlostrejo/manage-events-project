@@ -41,11 +41,18 @@ class UpdateEventRequest extends FormRequest
     public function attributes()
     {
         return [
-            'slug' => 'title',
+            'slug' => __('Title'),
+            'title' => __('Title'),
             'city_id' => __('City'),
-            'num_tickets' => __('Number of tickets'),
+            'num_tickets' => __('N.º Tickets'),
             'country_id' => __('Country'),
-            'tags.*' => __('Tags')
+            'tags.*' => __('Tags'),
+            'address' => __('Address'),
+            'start_date' => __('Start Date'),
+            'end_date' => __('End Date'),
+            'start_time' => __('Start Time'),
+            'description' => __('Description'),
+            'tags' => __('Tags')
         ];
     }
 

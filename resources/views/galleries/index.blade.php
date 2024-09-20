@@ -32,7 +32,7 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <img src="{{ Storage::disk('public')->url($gallery->image) }}" alt="Image of gallery" class="w-20 h-20">
+                                    <img src="{{ Storage::url($gallery->image) }}" alt="Image of gallery" class="w-20 h-20">
                                 </th>
                                 <td class="px-6 py-4">
                                     {{ $gallery->caption }}

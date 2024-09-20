@@ -106,5 +106,8 @@
     "New Gallery": "Nueva Galería",
     "Image": "Imagen",
     "Caption": "Subtítulo",
-    "No gallery found": "No se encontró galería"
+    "No gallery found": "No se encontró galería",
+    "Create new gallery": "Crear nueva galería",
+    "Image caption": "Subtítulo de la imagen",
+    "Gallery created successfully": "Galería creada satisfactoriamente"
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateGalleryRequest;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -17,12 +19,19 @@ class GalleryController extends Controller
 
     public function create()
     {
-        //
+        return view('galleries.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateGalleryRequest $request)
     {
-        //
+        $data = $request->validated();
+        
+        $data['image'] = Storage::disk('public')->put('galleries', $request->image);
+
+        auth()->user()->galleries()->create($data);
+
+        return to_route('galleries.index')->with('message', __('Gallery created successfully'));
+        
     }
 
 

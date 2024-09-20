@@ -64,8 +64,12 @@ class GalleryController extends Controller
         return to_route('galleries.index')->with('message', __('Gallery updated successfully'));
     }
 
-    public function destroy(string $id)
+    public function destroy(Gallery $gallery)
     {
-        //
+        Storage::disk('public')->delete($gallery->image);
+
+        $gallery->delete();
+
+       return to_route('galleries.index')->with('message', __('Gallerxy deleted successfully'));
     }
 }

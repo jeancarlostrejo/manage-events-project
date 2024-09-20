@@ -70,6 +70,6 @@ class GalleryController extends Controller
 
         $gallery->delete();
 
-       return to_route('galleries.index')->with('message', __('Gallerxy deleted successfully'));
+       return to_route('galleries.index')->with('message', __('Gallery deleted successfully'));
     }
 }

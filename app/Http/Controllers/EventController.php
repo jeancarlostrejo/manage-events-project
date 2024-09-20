@@ -95,7 +95,6 @@ class EventController extends Controller
 
     public function destroy(Event $event): RedirectResponse
     {
-
         Storage::disk('public')->delete($event->image);
         
         DB::beginTransaction();

@@ -17,7 +17,7 @@ class EventController extends Controller
 
     public function index(): View
     {
-        $events = Event::with('country')->get();
+        $events = auth()->user()->events()->with('country:id,name')->get();
 
         return view('events.index', compact('events'));
     }

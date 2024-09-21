@@ -22,16 +22,28 @@
                 @auth                    
                     <div class="flex space-x-2 p-4" x-data="{
                             eventLike: @js($like),
+                            attending: @js($attending),
+                            eventSaved: @js($eventSaved),
                             onHandleLike() {
                                 axios.post(`/events-like/{{ $event->id }}`).then(res => {
                                     this.eventLike = res.data
                                 }).catch(error => { console.log(`${error}`) })
-                            }
+                            },
+                            onHandleSave() {
+                                axios.post(`/events-save/{{ $event->id }}`).then(res => {
+                                    this.eventSaved = res.data
+                                }).catch(error => { console.log(`${error}`) })
+                            },
+                            onHandleAttending() {
+                                axios.post(`/events-attending/{{ $event->id }}`).then(res => {
+                                    this.attending = res.data
+                                }).catch(error => { console.log(`${error}`) })
+                            },
                         }">                        
                         <button type="button"
                             @click="onHandleLike"
                             class="text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-                            :class="eventLike ? 'dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800' : 'dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'">
+                            :class="eventLike ? 'dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800' : 'dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800'">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-3.5 h3.5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -40,7 +52,10 @@
                             {{ __('Like') }}
                         </button>
                         <button type="button"
-                            class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            @click="onHandleSave"
+                            class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            :class="eventSaved ? 'dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800' : 'dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800'"
+                            >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-3.5 h3.5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -49,7 +64,10 @@
                             {{ __('Save') }}
                         </button>
                         <button type="button"
-                            class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            @click="onHandleAttending"
+                            class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            :class="attending ? 'dark:bg-indigo-900 dark:hover:bg-indigo-900 dark:focus:ring-indigo-900' : 'dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800'"
+                            >
                             {{ __('Attending') }}
                             <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 14 10">

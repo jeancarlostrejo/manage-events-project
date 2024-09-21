@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
 
 class EventShowController extends Controller
 {
@@ -11,12 +10,15 @@ class EventShowController extends Controller
     {
         $event->load(['country:id,name', 'city:id,name', 'user:id,name,email']);
 
-        if(auth()->user()) {
+        if (auth()->user()) {
             $like = $event->likes()->where('user_id', auth()->user()->id)->first();
+            $eventSaved = $event->savedEvents()->where('user_id', auth()->user()->id)->first();
+            $attending = $event->attendings()->where('user_id', auth()->user()->id)->first();
         } else {
             $like = null;
+            $eventSaved = null;
+            $attending = null;
         }
-
-        return view('eventsShow', compact('event', 'like'));
+        return view('eventsShow', compact('event', 'like', 'eventSaved', 'attending'));
     }
 }

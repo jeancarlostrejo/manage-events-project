@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendingSystemController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CountryCityController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventShowController;
@@ -28,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/events-like/{event}', LikeSystemController::class)->name('events.like');
     Route::post('/events-save/{event}', SaveSystemController::class)->name('events.save');
     Route::post('/events-attending/{event}', AttendingSystemController::class)->name('events.likattending');
+    Route::post('/events/{event}/comments', [CommentController::class, 'store'])->name('events.comments.store');
+    Route::delete('/events/{event}/comments/{comment}', [CommentController::class, 'destroy'])->name('events.comments.destroy');
 });
 
 require __DIR__.'/auth.php';

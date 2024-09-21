@@ -127,10 +127,9 @@
                 </div>
             </div>
             @auth
-                <div
-                class="container d-flex justify-content-center align-items-center w-50 mt-6 bg-slate-200 p-4 rounded-md dark:bg-gray-500">
+                <div class="container d-flex justify-content-center align-items-center w-50 mt-6 bg-slate-200 p-4 rounded-md dark:bg-gray-500">
                     <div class="">
-                        <form action="#" class="flex justify-between space-x-2" method="POST">
+                        <form action="{{ route('events.comments.store', $event) }}" class="flex justify-between space-x-2" method="POST">
                             @csrf
                             <input type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -140,9 +139,40 @@
                                 {{ __('Comment') }}
                             </button>
                         </form>
+                        @error('content')
+                            <div class="text-sm text-red-900 font-bold">{{ $message }}</div>
+                        @enderror
                     </div>
-                </div>
             @endauth
+                    @forelse ($event->comments as $comment)
+                        <div class="w-full p-4 duration-500">
+                            <div class="flex items-center rounded-lg bg-white p-4">
+                                <div>
+                                    <div class="flex space-x-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        <h2 class="text-lg font-bold text-gray-900">{{ $comment->user->name }}</h2>
+                                    </div>
+                                    <p class="text-sm font-semibold text-gray-700">{{ $comment->content }}</p>
+                                    <h2 class="text-xs font-light text-gray-700 italic">{{ $comment->created_at->format('d-m-Y H:i A') }}</h2>
+                                    @auth
+                                        @if (auth()->user()->id == $comment->user_id)
+                                            <form action="{{ route('events.comments.destroy', [$event, $comment]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button  class="mt-6 rounded-lg bg-red-500 px-4 py-2 text-sm tracking-wider text-white outline-none hover:bg-red-700" type="submit">{{ __('Delete') }}</button>
+                                            </form>
+                                        @endif
+                                    @endauth
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                    @endforelse
+                </div>
         </div>
     </div>
 </x-main-layout>

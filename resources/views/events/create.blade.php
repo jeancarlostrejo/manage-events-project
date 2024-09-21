@@ -17,7 +17,6 @@
                 city: {{ old('city_id', 'null') }},
                 cities: [],
                 onCountryChange(event) {
-                    console.log('Esto es:' + event.target.value)
                     if (event.target.value > 0) {
                         axios.get(`/countries/${event.target.value}`).then(res => {
                             this.cities = res.data

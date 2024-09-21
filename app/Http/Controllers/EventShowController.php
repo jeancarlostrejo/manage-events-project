@@ -13,7 +13,8 @@ class EventShowController extends Controller
     public function __invoke(Event $event)
     {
         $event->load(['country:id,name', 'city:id,name', 'user:id,name,email']);
+        $like = $event->likes()->where('user_id', auth()->user()->id)->first();
 
-        return view('eventsShow', compact('event'));
+        return view('eventsShow', compact('event', 'like'));
     }
 }

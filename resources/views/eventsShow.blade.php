@@ -159,13 +159,13 @@
                                     <p class="text-sm font-semibold text-gray-700">{{ $comment->content }}</p>
                                     <h2 class="text-xs font-light text-gray-700 italic">{{ $comment->created_at->format('d-m-Y H:i A') }}</h2>
                                     @auth
-                                        @if (auth()->user()->id == $comment->user_id)
+                                        @can('view', $comment)
                                             <form action="{{ route('events.comments.destroy', [$event, $comment]) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button  class="mt-6 rounded-lg bg-red-500 px-4 py-2 text-sm tracking-wider text-white outline-none hover:bg-red-700" type="submit">{{ __('Delete') }}</button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     @endauth
                                 </div>
                             </div>

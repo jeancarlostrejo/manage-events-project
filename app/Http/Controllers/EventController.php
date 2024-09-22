@@ -14,7 +14,6 @@ use Illuminate\View\View;
 
 class EventController extends Controller
 {
-
     public function index(): View
     {
         $events = auth()->user()->events()->with('country:id,name')->get();
@@ -51,22 +50,21 @@ class EventController extends Controller
         return to_route('events.index')->with('message', __('Event created successfully'));
     }
 
-    public function show(string $id)
-    {
-        //
-    }
-
     public function edit(Event $event): View
     {
+        $this->authorize('view', $event);
+
         $event->load('tags');
         $countries = Country::get(['id', 'name']);
         $tags = Tag::get(['id', 'name']);
-        
+
         return view('events.edit', compact('countries', 'tags', 'event'));
     }
 
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
+        $this->authorize('update', $event);
+
         $data = $request->validated();
 
         DB::beginTransaction();
@@ -90,15 +88,17 @@ class EventController extends Controller
             return to_route('events.index')->with('error', $th->getMessage());
         }
 
-        return to_route('events.index')->with('message', __('Event updated successfully') );
+        return to_route('events.index')->with('message', __('Event updated successfully'));
     }
 
     public function destroy(Event $event): RedirectResponse
     {
+        $this->authorize('delete', $event);
+
         Storage::disk('public')->delete($event->image);
-        
+
         DB::beginTransaction();
-        
+
         try {
             $event->tags()->detach($event->tags);
             $event->delete();

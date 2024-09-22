@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class LikeSystemController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
     public function __invoke(Request $request, Event $event)
     {
         $like = $event->likes()->where('user_id', auth()->user()->id)->first();

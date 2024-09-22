@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Illuminate\View\View;
 
 class EventShowController extends Controller
 {
-    public function __invoke(Event $event)
+    public function __invoke(Event $event): View
     {
         $event->load(['country:id,name', 'city:id,name', 'user:id,name,email', 'comments' => function ($query) {
             $query->orderBy('created_at', 'desc')

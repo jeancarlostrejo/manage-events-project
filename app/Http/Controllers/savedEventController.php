@@ -8,9 +8,6 @@ use Illuminate\View\View;
 
 class savedEventController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
     public function __invoke(Request $request): View
     {
         $events = Event::with('savedEvents')->whereHas('savedEvents', function ($query){

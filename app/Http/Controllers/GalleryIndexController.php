@@ -9,7 +9,7 @@ class GalleryIndexController extends Controller
     public function __invoke()
     {
         $galleries = Gallery::orderBy('created_at', 'desc')->paginate(10);
-
+        
         return view('galleryIndex', compact('galleries'));
     }
 }

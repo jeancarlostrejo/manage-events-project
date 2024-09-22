@@ -13,7 +13,7 @@ class CommentController extends Controller
     {
         $event->comments()->create([
             'user_id' => auth()->user()->id,
-            "content" => $request->content
+            "content" => $request->content,
         ]);
 
         return to_route('eventShow', $event);
@@ -21,7 +21,6 @@ class CommentController extends Controller
 
     public function destroy(Event $event, Comment $comment): RedirectResponse
     {
-
         $this->authorize('delete', $comment);
 
         $comment->delete();

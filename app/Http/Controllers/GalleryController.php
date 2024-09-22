@@ -6,19 +6,16 @@ use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use App\Models\Gallery;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class GalleryController extends Controller
 {
-
     public function index(): View
     {
         $galleries = auth()->user()->galleries;
         return view('galleries.index', compact('galleries'));
     }
-
 
     public function create(): View
     {
@@ -37,18 +34,10 @@ class GalleryController extends Controller
         
     }
 
-
-    public function show(string $id)
-    {
-        //
-    }
-
-
     public function edit(Gallery $gallery): View
     {
         return view('galleries.edit', compact('gallery'));
     }
-
 
     public function update(UpdateGalleryRequest $request, Gallery $gallery): RedirectResponse
     {
@@ -71,7 +60,7 @@ class GalleryController extends Controller
         Storage::disk('public')->delete($gallery->image);
 
         $gallery->delete();
-
-       return to_route('galleries.index')->with('message', __('Gallery deleted successfully'));
+        
+        return to_route('galleries.index')->with('message', __('Gallery deleted successfully'));
     }
 }
